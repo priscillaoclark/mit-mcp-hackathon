@@ -19,7 +19,14 @@ A Model Context Protocol (MCP) server that provides real-time weather forecasts 
 
 ## Installation
 
-1. Install the required dependencies:
+1. (Recommended) Create and activate a virtual environment:
+   ```
+   python -m venv venv
+   source venv/bin/activate  # On macOS/Linux
+   venv\Scripts\activate    # On Windows
+   ```
+
+2. Install the required dependencies:
    ```
    pip install -r requirements.txt
    ```

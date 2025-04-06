@@ -47,7 +47,15 @@ Provides Claude Desktop with real-time weather forecasts and severe weather aler
    cd regulations_mcp
    ```
 
-2. Install the required dependencies:
+2. (Recommended) Create and activate a virtual environment:
+
+   ```
+   python -m venv venv
+   source venv/bin/activate  # On macOS/Linux
+   venv\Scripts\activate    # On Windows
+   ```
+
+3. Install the required dependencies:
 
    ```
    pip install -r requirements.txt
@@ -66,7 +74,15 @@ Provides Claude Desktop with real-time weather forecasts and severe weather aler
    cd weather_mcp
    ```
 
-2. Install the required dependencies:
+2. (Recommended) Create and activate a virtual environment:
+
+   ```
+   python -m venv venv
+   source venv/bin/activate  # On macOS/Linux
+   venv\Scripts\activate    # On Windows
+   ```
+
+3. Install the required dependencies:
 
    ```
    pip install -r requirements.txt
