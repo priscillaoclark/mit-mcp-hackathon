@@ -61,7 +61,7 @@ Provides Claude Desktop with real-time weather forecasts and severe weather aler
    pip install -r requirements.txt
    ```
 
-3. (Required) Set up your regulations.gov API key in a `.env` file or environment variable:
+4. (Required) Set up your regulations.gov API key in a `.env` file or environment variable:
    ```
    REGULATIONS_GOV_API_KEY=your_api_key_here
    ```
@@ -88,7 +88,7 @@ Provides Claude Desktop with real-time weather forecasts and severe weather aler
    pip install -r requirements.txt
    ```
 
-3. (Required) Set up your WeatherAPI.com API key in a `.env` file or environment variable:
+4. (Required) Set up your WeatherAPI.com API key in a `.env` file or environment variable:
    ```
    WEATHER_API_KEY=your_api_key_here
    ```
@@ -186,6 +186,78 @@ from weather_mcp.server import get_forecast
 result = get_forecast(location="New York")
 print(result)
 ```
+
+## Integrating with Claude Code
+
+In addition to Claude Desktop, you can also use these MCP servers with Claude Code. Here's how to set them up:
+
+### 1. Start the MCP Servers
+
+First, start both MCP servers on your local machine:
+
+```bash
+# Start the Regulations.gov MCP server
+cd regulations_mcp
+python server.py
+
+# In another terminal, start the Weather MCP server
+cd weather_mcp
+python server.py
+```
+
+### 2. Configure Claude Code
+
+1. Create a `.claude.yaml` file in your project directory with the following content:
+
+```yaml
+mcp_servers:
+  - name: Regulations.gov
+    url: http://localhost:8000
+    env:
+      REGULATIONS_GOV_API_KEY: your_api_key_here
+  - name: Weather
+    url: http://localhost:8001
+    env:
+      WEATHER_API_KEY: your_api_key_here
+```
+
+2. Replace `your_api_key_here` with your actual API keys.
+
+### 3. Install and Configure Claude Code
+
+1. Install the Claude Code CLI if you haven't already:
+
+   ```bash
+   npm install -g @anthropic-ai/claude-code
+   ```
+
+2. Log in to Claude Code:
+
+   ```bash
+   claude login
+   ```
+
+3. Add the MCP servers to Claude Code:
+
+   ```bash
+   claude mcp add --name "Regulations.gov" --url "http://localhost:8000"
+   claude mcp add --name "Weather" --url "http://localhost:8001"
+   ```
+
+4. Verify the MCP servers are added:
+   ```bash
+   claude mcp list
+   ```
+
+### 4. Use the Claude Code CLI
+
+With the servers running and configured, you can use the Claude Code CLI to interact with the MCP servers:
+
+```bash
+claude code "Search for recent EPA regulations and check the weather in Washington DC"
+```
+
+For more details, refer to the [Claude Code documentation](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/tutorials).
 
 ## Additional Resources
 

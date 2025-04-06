@@ -97,6 +97,55 @@ The server provides the following tools for interacting with the regulations.gov
 3. Replace `your_api_key_here` with your actual regulations.gov API key
 4. Restart Claude Desktop
 
+## Integrating with Claude Code
+
+You can also use this MCP server with Claude Code. Here's how to set it up:
+
+1. Start the Regulations.gov MCP server on your local machine:
+   ```bash
+   python server.py
+   ```
+
+2. Create a `.claude.yaml` file in your project directory with the following content:
+   ```yaml
+   mcp_servers:
+     - name: Regulations.gov
+       url: http://localhost:8000
+       env:
+         REGULATIONS_GOV_API_KEY: your_api_key_here
+   ```
+
+3. Replace `your_api_key_here` with your actual regulations.gov API key.
+
+4. Install and configure Claude Code:
+
+   a. Install the Claude Code CLI if you haven't already:
+   ```bash
+   npm install -g @anthropic-ai/claude-code
+   ```
+
+   b. Log in to Claude Code:
+   ```bash
+   claude login
+   ```
+
+   c. Add the Regulations.gov MCP server to Claude Code:
+   ```bash
+   claude mcp add --name "Regulations.gov" --url "http://localhost:8000"
+   ```
+
+   d. Verify the MCP server is added:
+   ```bash
+   claude mcp list
+   ```
+
+5. Use the Claude Code CLI to interact with the Regulations.gov MCP server:
+   ```bash
+   claude code "Find recent EPA regulations about air quality"
+   ```
+
+For more details, refer to the [Claude Code documentation](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/tutorials).
+
 ## Available Tools
 
 - `search_documents`: Search for regulatory documents

@@ -103,6 +103,55 @@ The server provides the following tools for accessing weather data:
 
 3. Restart Claude Desktop
 
+## Integrating with Claude Code
+
+You can also use this MCP server with Claude Code. Here's how to set it up:
+
+1. Start the Weather MCP server on your local machine:
+   ```bash
+   python server.py
+   ```
+
+2. Create a `.claude.yaml` file in your project directory with the following content:
+   ```yaml
+   mcp_servers:
+     - name: Weather
+       url: http://localhost:8001
+       env:
+         WEATHER_API_KEY: your_api_key_here
+   ```
+
+3. Replace `your_api_key_here` with your actual WeatherAPI.com API key.
+
+4. Install and configure Claude Code:
+
+   a. Install the Claude Code CLI if you haven't already:
+   ```bash
+   npm install -g @anthropic-ai/claude-code
+   ```
+
+   b. Log in to Claude Code:
+   ```bash
+   claude login
+   ```
+
+   c. Add the Weather MCP server to Claude Code:
+   ```bash
+   claude mcp add --name "Weather" --url "http://localhost:8001"
+   ```
+
+   d. Verify the MCP server is added:
+   ```bash
+   claude mcp list
+   ```
+
+5. Use the Claude Code CLI to interact with the Weather MCP server:
+   ```bash
+   claude code "What's the weather forecast for New York City?"
+   ```
+
+For more details, refer to the [Claude Code documentation](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/tutorials).
+
 ## Available Tools
 
 - `get_forecast`: Get the weather forecast for a location

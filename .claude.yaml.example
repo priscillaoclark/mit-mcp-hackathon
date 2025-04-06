@@ -1,0 +1,9 @@
+mcp_servers:
+  - name: Regulations.gov
+    url: http://localhost:8000
+    env:
+      REGULATIONS_GOV_API_KEY: your_api_key_here
+  - name: Weather
+    url: http://localhost:8001
+    env:
+      WEATHER_API_KEY: your_api_key_here
