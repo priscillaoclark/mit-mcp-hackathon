@@ -1,11 +1,14 @@
 # Weather MCP Server
 
-A simple Model Context Protocol (MCP) server that provides weather forecasts and alerts.
+A Model Context Protocol (MCP) server that provides real-time weather forecasts and severe weather alerts using the WeatherAPI.com service.
 
 ## Features
 
-- Get weather forecasts for any location
-- Check for severe weather alerts
+- Get detailed weather forecasts for any location worldwide
+- Retrieve current conditions, hourly forecasts, and multi-day forecasts
+- Check for severe weather alerts and warnings
+- Secure API key handling through environment variables
+- Comprehensive error handling with helpful feedback
 - Easy integration with Claude Desktop
 
 ## Prerequisites
@@ -48,6 +51,27 @@ Alternatively, you can run the server directly with Python:
 ```
 python server.py
 ```
+
+### Available Tools
+
+The server provides the following tools for accessing weather data:
+
+- `get_forecast`: Get a detailed weather forecast for a specified location
+  - Includes current conditions, hourly forecasts, and multi-day forecasts
+  - Supports location search by city name, postal code, or coordinates
+  - Customizable forecast days (1-3 days)
+
+- `get_alerts`: Get severe weather alerts for a specified location
+  - Provides critical weather warnings and advisories
+  - Includes alert title, severity, urgency, and description
+  - Supports the same location formats as get_forecast
+
+### Example Queries
+
+- "What's the weather forecast for New York City?"
+- "Are there any severe weather alerts in Miami?"
+- "What will the temperature be in San Francisco tomorrow?"
+- "Is it going to rain in Seattle this weekend?"
 
 ### Connecting to Claude Desktop
 
