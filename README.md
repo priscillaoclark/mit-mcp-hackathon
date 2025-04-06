@@ -34,24 +34,26 @@ Provides Claude Desktop with real-time weather forecasts and severe weather aler
 
 - Python 3.8 or higher
 - pip (Python package manager)
-- (Optional) regulations.gov API key for full access to the regulations.gov API
-- (Optional) WeatherAPI.com API key for production use of the weather service
+- (Required) regulations.gov API key for full access to the regulations.gov API
+- (Required) WeatherAPI.com API key for production use of the weather service
 
 ## Installation
 
 ### Regulations.gov MCP Server
 
 1. Navigate to the regulations_mcp directory:
+
    ```
    cd regulations_mcp
    ```
 
 2. Install the required dependencies:
+
    ```
    pip install -r requirements.txt
    ```
 
-3. (Optional) Set up your regulations.gov API key in a `.env` file or environment variable:
+3. (Required) Set up your regulations.gov API key in a `.env` file or environment variable:
    ```
    REGULATIONS_GOV_API_KEY=your_api_key_here
    ```
@@ -59,16 +61,18 @@ Provides Claude Desktop with real-time weather forecasts and severe weather aler
 ### Weather MCP Server
 
 1. Navigate to the weather_mcp directory:
+
    ```
    cd weather_mcp
    ```
 
 2. Install the required dependencies:
+
    ```
    pip install -r requirements.txt
    ```
 
-3. (Optional) Set up your WeatherAPI.com API key in a `.env` file or environment variable:
+3. (Required) Set up your WeatherAPI.com API key in a `.env` file or environment variable:
    ```
    WEATHER_API_KEY=your_api_key_here
    ```
@@ -92,10 +96,12 @@ python server.py
 ## Connecting to Claude Desktop
 
 1. Update your Claude Desktop configuration file:
+
    - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
    - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 
 2. Add both MCP servers to the configuration:
+
    ```json
    {
      "mcpServers": [
