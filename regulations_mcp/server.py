@@ -4,6 +4,7 @@ import os
 import logging
 from dotenv import load_dotenv
 import json
+from datetime import datetime, timedelta
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -92,8 +93,14 @@ def search_documents(search_term: str = "", sort: str = "postedDate", posted_dat
         A formatted string containing the search results
     """
     # Validate input
-    if limit < 1 or limit > 50:
-        return "Please provide a limit between 1 and 50."
+    if limit < 5 or limit > 50:
+        return "Please provide a limit between 5 and 50. The regulations.gov API requires a minimum page size of 5."
+    
+    # If no date filter is provided, default to showing documents from the past year
+    if not posted_date_from and not posted_date_to:
+        one_year_ago = (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d')
+        posted_date_from = one_year_ago
+        logger.info(f"No date filter provided, defaulting to documents since {posted_date_from}")
     
     # Build parameters
     params = {
@@ -168,8 +175,14 @@ def search_comments(search_term: str = "", sort: str = "postedDate", posted_date
         A formatted string containing the search results
     """
     # Validate input
-    if limit < 1 or limit > 50:
-        return "Please provide a limit between 1 and 50."
+    if limit < 5 or limit > 50:
+        return "Please provide a limit between 5 and 50. The regulations.gov API requires a minimum page size of 5."
+    
+    # If no date filter is provided, default to showing comments from the past year
+    if not posted_date_from and not posted_date_to:
+        one_year_ago = (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d')
+        posted_date_from = one_year_ago
+        logger.info(f"No date filter provided, defaulting to comments since {posted_date_from}")
     
     # Build parameters
     params = {
@@ -240,8 +253,8 @@ def search_dockets(search_term: str = "", sort: str = "title", agency: str = "",
         A formatted string containing the search results
     """
     # Validate input
-    if limit < 1 or limit > 50:
-        return "Please provide a limit between 1 and 50."
+    if limit < 5 or limit > 50:
+        return "Please provide a limit between 5 and 50. The regulations.gov API requires a minimum page size of 5."
     
     # Build parameters
     params = {
@@ -424,6 +437,41 @@ def get_docket_details(docket_id: str) -> str:
     
     return formatted_result
 
+@mcp.tool()
+def list_agencies() -> str:
+    """
+    List common agency IDs that can be used for searching.
+    
+    Returns:
+        A formatted string containing common agency IDs
+    """
+    agencies = [
+        {"id": "EPA", "name": "Environmental Protection Agency"},
+        {"id": "FDA", "name": "Food and Drug Administration"},
+        {"id": "SEC", "name": "Securities and Exchange Commission"},
+        {"id": "DOT", "name": "Department of Transportation"},
+        {"id": "FCC", "name": "Federal Communications Commission"},
+        {"id": "USDA", "name": "Department of Agriculture"},
+        {"id": "DOE", "name": "Department of Energy"},
+        {"id": "HHS", "name": "Department of Health and Human Services"},
+        {"id": "DHS", "name": "Department of Homeland Security"},
+        {"id": "DOL", "name": "Department of Labor"},
+        {"id": "DOJ", "name": "Department of Justice"},
+        {"id": "DOD", "name": "Department of Defense"},
+        {"id": "CFPB", "name": "Consumer Financial Protection Bureau"},
+        {"id": "FERC", "name": "Federal Energy Regulatory Commission"},
+        {"id": "FTC", "name": "Federal Trade Commission"}
+    ]
+    
+    formatted_result = "Common Agency IDs for searching regulations.gov:\n\n"
+    
+    for agency in agencies:
+        formatted_result += f"{agency['id']}: {agency['name']}\n"
+    
+    formatted_result += "\nUse these agency IDs with the search_documents, search_comments, and search_dockets tools."
+    
+    return formatted_result
+
 # Add a resource to provide general information about the regulations.gov service
 @mcp.resource("regulations://info")
 def get_regulations_info() -> str:
@@ -443,9 +491,16 @@ def get_regulations_info() -> str:
     - get_document_details: Get detailed information about a specific document
     - get_comment_details: Get detailed information about a specific comment
     - get_docket_details: Get detailed information about a specific docket
+    - list_agencies: List common agency IDs that can be used for searching
+    
+    Tips for effective searching:
+    - Use date filters (posted_date_from, posted_date_to) to find more recent documents
+    - Search by agency ID (e.g., 'EPA', 'FDA', 'SEC') to narrow results
+    - Use specific keywords in search_term to find relevant documents
+    - Try different sort options (postedDate, title) to see different results
     
     Example usage:
-    - Search for recent EPA documents
+    - Search for recent EPA documents about climate change
     - Find comments about a specific regulation
     - Get details about a docket of interest
     """
